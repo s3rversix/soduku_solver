@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudoku Solver</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body class="bg-light">
+    <div
+      class="container d-flex flex-column justify-content-center align-items-center min-vh-100"
+    >
+      <a
+        href="/about"
+        class="btn btn-dark position-absolute top-0 end-0 m-3"
+        style="
+        font-size: 20px; 
+        text-align: center; 
+        padding: 0
+        width:35px;
+        height:auto;
+        "
+      >
+        WHO?
+      </a>
+
+      <div
+        class="card shadow-lg p-4 mb-4"
+        style="max-width: 600px; width: 100%"
+      >
+        <h1 class="text-center mb-4">Sudoku Solver</h1>
+        <form id="sudoku-form">
+          <table class="table table-bordered text-center">
+            <tbody>
+              <script>
+                // Loop through 9 rows and columns to generate the grid
+                for (let row = 0; row < 9; row++) {
+                  document.write("<tr>");
+                  for (let col = 0; col < 9; col++) {
+                    const isDim =
+                      Math.floor(col / 3) % 2 !== 0 &&
+                      Math.floor(row / 3) % 2 !== 0 &&
+                      !(Math.floor(row / 3) === 1 && Math.floor(col / 3) === 1); // Exclude box 4 (row 3, col 3)
+                    document.write(`
+                    <td class="${isDim ? "dim" : ""}">
+                      <input type="number" id="cell-${row}-${col}" class="form-control form-control-sm sudoku-cell" style="width: 40px;" maxlength="1" min="1" max="9" />
+                    </td>
+                  `);
+                  }
+                  document.write("</tr>");
+                }
+              </script>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-between">
+            <button
+              type="submit"
+              class="btn btn-success w-48 mb-2"
+              id="solve-btn"
+            >
+              Solve Puzzle
+            </button>
+            <button
+              type="button"
+              id="clear-btn"
+              class="btn btn-secondary w-48 mb-2"
+              style="display: none"
+            >
+              Clear Grid
+            </button>
+          </div>
+        </form>
+        <div id="solution" class="solution mt-3"></div>
+      </div>
+
+      <footer class="mt-auto text-center py-3 bg-dark text-white">
+        <p class="m-0">Made by Hilal</p>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
