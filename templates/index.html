@@ -13,7 +13,7 @@
       href="{{ url_for('static', filename='styles.css') }}"
     />
   </head>
-  <body class="bg-light">
+  <body class="bg-dark">
     <div
       class="container d-flex flex-column justify-content-center align-items-center min-vh-100"
     >
@@ -40,17 +40,20 @@
           <table class="table table-bordered text-center">
             <tbody>
               <script>
-                // Loop through 9 rows and columns to generate the grid
                 for (let row = 0; row < 9; row++) {
                   document.write("<tr>");
                   for (let col = 0; col < 9; col++) {
                     const isDim =
                       Math.floor(col / 3) % 2 !== 0 &&
                       Math.floor(row / 3) % 2 !== 0 &&
-                      !(Math.floor(row / 3) === 1 && Math.floor(col / 3) === 1); // Exclude box 4 (row 3, col 3)
+                      !(Math.floor(row / 3) === 1 && Math.floor(col / 3) === 1);
                     document.write(`
                     <td class="${isDim ? "dim" : ""}">
-                      <input type="number" id="cell-${row}-${col}" class="form-control form-control-sm sudoku-cell" style="width: 40px;" maxlength="1" min="1" max="9" />
+                      <input  
+                              type="number" id="cell-${row}-${col}" 
+                              class="form-control form-control-sm sudoku-cell" 
+                              style="width: 40px;" maxlength="1" min="1" max="9"  
+                      />
                     </td>
                   `);
                   }
