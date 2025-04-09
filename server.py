@@ -1,9 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
-from flask_cors import CORS
 import os
 
 app = Flask(__name__, static_folder='build')
-CORS(app)
 
 def is_valid(board, row, col, num):
     for i in range(9):

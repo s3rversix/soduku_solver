@@ -105,6 +105,7 @@ const SudokuSolver = () => {
   const [highlightedCells, setHighlightedCells] = useState([]);
   const [message, setMessage] = useState({ text: '', isError: false, show: false });
   const [solved, setSolved] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCellChange = (row, col, value) => {
     if (value === '' || (parseInt(value) >= 1 && parseInt(value) <= 9)) {
@@ -144,6 +145,9 @@ const SudokuSolver = () => {
 
   const solveSudoku = async () => {
     try {
+      setIsLoading(true);
+      setMessage({ text: '', isError: false, show: false });
+      
       // Create form data in the format expected by the Flask API
       const formData = new URLSearchParams();
       board.forEach((row, rowIndex) => {
@@ -187,6 +191,8 @@ const SudokuSolver = () => {
         isError: true,
         show: true,
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -222,14 +228,19 @@ const SudokuSolver = () => {
               onClick={() => handleCellClick(rowIndex, colIndex)}
               isDimmed={isDimmed(rowIndex, colIndex)}
               isHighlighted={highlightedCells.includes(`${rowIndex}-${colIndex}`)}
+              disabled={isLoading}
             />
           ))
         )}
       </SudokuGrid>
       
       <ButtonContainer>
-        <SolveButton onClick={solveSudoku}>Solve Puzzle</SolveButton>
-        <ClearButton onClick={clearBoard}>Clear Grid</ClearButton>
+        <SolveButton onClick={solveSudoku} disabled={isLoading}>
+          {isLoading ? 'Solving...' : 'Solve Puzzle'}
+        </SolveButton>
+        <ClearButton onClick={clearBoard} disabled={isLoading}>
+          Clear Grid
+        </ClearButton>
       </ButtonContainer>
       
       <Message show={message.show} error={message.isError}>

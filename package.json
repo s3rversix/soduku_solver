@@ -1,5 +1,5 @@
 {
-  "name": "react-sudoku-solver",
+  "name": "sudoku-solver",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -7,20 +7,14 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.1",
-    "axios": "^1.6.2",
-    "react-router-dom": "^6.20.0"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
+    "react-router-dom": "^6.20.0",
+    "axios": "^1.6.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start:server": "python server.py",
-    "start:dev": "concurrently \"npm run start\" \"npm run start:server\"",
-    "postinstall": "npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
