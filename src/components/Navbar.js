@@ -67,6 +67,9 @@ const Navbar = () => {
         <NavLink to="/game" active={location.pathname === '/game' ? 1 : 0}>
           Play Game
         </NavLink>
+        <NavLink to="/how-to-play" active={location.pathname === '/how-to-play' ? 1 : 0}>
+          How to Play
+        </NavLink>
         <NavLink to="/about" active={location.pathname === '/about' ? 1 : 0}>
           About
         </NavLink>
