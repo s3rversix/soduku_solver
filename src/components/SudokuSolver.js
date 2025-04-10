@@ -4,14 +4,21 @@ import axios from 'axios';
 
 const SolverContainer = styled.div`
   max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
+  margin: 1rem auto;
+  padding: 1rem;
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+  }
 `;
 
 const Title = styled.h1`
@@ -19,6 +26,11 @@ const Title = styled.h1`
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 700;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const SudokuGrid = styled.div`
@@ -29,6 +41,10 @@ const SudokuGrid = styled.div`
   background-color: #343a40;
   border: 2px solid #343a40;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const Cell = styled.input`
@@ -48,6 +64,18 @@ const Cell = styled.input`
   &:focus {
     background-color: #e3e3e3;
   }
+
+  @media (max-width: 768px) {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 350px) {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -55,6 +83,11 @@ const ButtonContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: ${props => props.vertical ? 'column' : 'row'};
+    gap: ${props => props.vertical ? '0.5rem' : '0'};
+  }
 `;
 
 const Button = styled.button`
@@ -68,6 +101,12 @@ const Button = styled.button`
   
   &:focus {
     outline: none;
+  }
+
+  @media (max-width: 768px) {
+    width: ${props => props.fullWidthMobile ? '100%' : '48%'};
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
   }
 `;
 

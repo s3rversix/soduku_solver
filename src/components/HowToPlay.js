@@ -4,11 +4,18 @@ import { Link } from 'react-router-dom';
 
 const HowToPlayContainer = styled.div`
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
+  margin: 1rem auto;
+  padding: 1.5rem;
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin: 0.5rem;
+    padding: 1rem;
+    border-radius: 10px;
+  }
 `;
 
 const Title = styled.h1`
@@ -16,10 +23,19 @@ const Title = styled.h1`
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 700;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Section = styled.div`
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
@@ -28,18 +44,32 @@ const SectionTitle = styled.h2`
   font-weight: 600;
   padding-bottom: 0.5rem;
   border-bottom: 2px solid #e9ecef;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+  }
 `;
 
 const SubsectionTitle = styled.h3`
   color: #343a40;
   margin: 1.25rem 0 0.75rem 0;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem 0;
+  }
 `;
 
 const Paragraph = styled.p`
   color: #495057;
   line-height: 1.6;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
 `;
 
 const List = styled.ol`
@@ -47,6 +77,11 @@ const List = styled.ol`
   line-height: 1.6;
   margin-bottom: 1rem;
   margin-left: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    margin-left: 1.2rem;
+  }
 `;
 
 const UnorderedList = styled.ul`
@@ -54,10 +89,19 @@ const UnorderedList = styled.ul`
   line-height: 1.6;
   margin-bottom: 1rem;
   margin-left: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    margin-left: 1.2rem;
+  }
 `;
 
 const ListItem = styled.li`
   margin-bottom: 0.75rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const RuleHighlight = styled.div`
@@ -66,12 +110,23 @@ const RuleHighlight = styled.div`
   padding: 1rem;
   margin: 1rem 0;
   border-radius: 0 5px 5px 0;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    margin: 0.75rem 0;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
 `;
 
 const Button = styled(Link)`

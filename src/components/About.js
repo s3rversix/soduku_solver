@@ -4,11 +4,18 @@ import { Link } from 'react-router-dom';
 
 const AboutContainer = styled.div`
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
+  margin: 1rem auto;
+  padding: 1.5rem;
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin: 0.5rem;
+    padding: 1rem;
+    border-radius: 10px;
+  }
 `;
 
 const Title = styled.h1`
@@ -16,6 +23,11 @@ const Title = styled.h1`
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 700;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Section = styled.div`
@@ -26,12 +38,20 @@ const SectionTitle = styled.h3`
   color: #343a40;
   margin-bottom: 0.75rem;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const Paragraph = styled.p`
   color: #495057;
   line-height: 1.6;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
 `;
 
 const List = styled.ul`
@@ -39,6 +59,11 @@ const List = styled.ul`
   line-height: 1.6;
   margin-bottom: 1rem;
   margin-left: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    margin-left: 1.2rem;
+  }
 `;
 
 const ListItem = styled.li`
@@ -49,6 +74,11 @@ const ButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
   margin-top: 1.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 `;
 
 const Button = styled(Link)`

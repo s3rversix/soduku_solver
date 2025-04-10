@@ -4,14 +4,21 @@ import axios from 'axios';
 
 const GameContainer = styled.div`
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
+  margin: 1rem auto;
+  padding: 1rem;
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+  }
 `;
 
 const Title = styled.h1`
@@ -19,6 +26,11 @@ const Title = styled.h1`
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 700;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const GameLayout = styled.div`
@@ -28,12 +40,21 @@ const GameLayout = styled.div`
   justify-content: center;
   gap: 2rem;
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 const LeftPanel = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const RightPanel = styled.div`
@@ -42,6 +63,11 @@ const RightPanel = styled.div`
   align-items: center;
   justify-content: flex-start;
   min-width: 240px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-width: unset;
+  }
 `;
 
 const SudokuGrid = styled.div`
@@ -52,6 +78,10 @@ const SudokuGrid = styled.div`
   background-color: #343a40;
   border: 2px solid #343a40;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const Cell = styled.input`
@@ -74,6 +104,18 @@ const Cell = styled.input`
 
   &:focus {
     background-color: #b3e5fc;
+  }
+
+  @media (max-width: 768px) {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 350px) {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
   }
 `;
 
@@ -162,6 +204,10 @@ const NumberPad = styled.div`
   gap: 0.5rem;
   margin-top: 1rem;
   width: 100%;
+
+  @media (max-width: 768px) {
+    max-width: 300px;
+  }
 `;
 
 const NumberButton = styled(Button)`
@@ -172,6 +218,11 @@ const NumberButton = styled(Button)`
   
   &:hover {
     background-color: #d0d0d0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    font-size: 1rem;
   }
 `;
 
