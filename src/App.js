@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import SudokuSolver from './components/SudokuSolver';
+import SudokuGame from './components/SudokuGame';
 import About from './components/About';
 import Navbar from './components/Navbar';
 
@@ -28,6 +29,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<SudokuSolver />} />
+          <Route path="/game" element={<SudokuGame />} />
           <Route path="/about" element={<About />} />
         </Routes>
         <Footer>

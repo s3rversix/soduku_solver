@@ -59,10 +59,13 @@ const Navbar = () => {
   
   return (
     <NavbarContainer>
-      <Logo to="/">Sudoku Solver</Logo>
+      <Logo to="/">Sudoku Master</Logo>
       <NavLinks>
         <NavLink to="/" active={location.pathname === '/' ? 1 : 0}>
           Solver
+        </NavLink>
+        <NavLink to="/game" active={location.pathname === '/game' ? 1 : 0}>
+          Play Game
         </NavLink>
         <NavLink to="/about" active={location.pathname === '/about' ? 1 : 0}>
           About

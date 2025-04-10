@@ -1,5 +1,8 @@
 from flask import Flask, request, jsonify, send_from_directory
 import os
+import random
+import copy
+import json
 
 app = Flask(__name__, static_folder='build')
 
@@ -33,6 +36,60 @@ def find_empty_location(board):
             if board[i][j] == 0:
                 return i, j
     return None
+
+def generate_solved_board():
+    board = [[0 for _ in range(9)] for _ in range(9)]
+    
+    # Fill diagonal 3x3 boxes first (these can be filled independently)
+    for box in range(0, 9, 3):
+        nums = list(range(1, 10))
+        random.shuffle(nums)
+        for i in range(3):
+            for j in range(3):
+                board[box + i][box + j] = nums.pop()
+    
+    # Solve the rest of the board
+    solve_sudoku(board)
+    return board
+
+def create_puzzle(solved_board, difficulty):
+    # Create a copy of the solved board
+    puzzle = copy.deepcopy(solved_board)
+    
+    # Define how many cells to remove based on difficulty
+    if difficulty == 'easy':
+        cells_to_remove = 35
+    elif difficulty == 'medium':
+        cells_to_remove = 45
+    else:  # hard
+        cells_to_remove = 55
+    
+    # Keep track of cell positions
+    positions = [(i, j) for i in range(9) for j in range(9)]
+    random.shuffle(positions)
+    
+    # Remove cells
+    for i, j in positions[:cells_to_remove]:
+        puzzle[i][j] = 0
+    
+    return puzzle
+
+@app.route('/api/generate', methods=['GET'])
+def generate():
+    try:
+        difficulty = request.args.get('difficulty', 'medium')
+        if difficulty not in ['easy', 'medium', 'hard']:
+            difficulty = 'medium'
+            
+        solved_board = generate_solved_board()
+        puzzle = create_puzzle(solved_board, difficulty)
+        
+        return jsonify({
+            'puzzle': puzzle,
+            'solution': solved_board
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)})
 
 @app.route('/api/solve', methods=['POST'])
 def solve():
