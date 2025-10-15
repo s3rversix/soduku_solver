@@ -183,59 +183,6 @@ const SudokuGame = () => {
   const [errors, setErrors] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
 
-  // Handle keyboard input
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (!selectedCell) return;
-
-      const key = event.key;
-
-      // Handle number keys 1-9
-      if (key >= '1' && key <= '9') {
-        handleNumberInput(parseInt(key));
-        event.preventDefault();
-      }
-
-      // Handle backspace and delete for erasing
-      if (key === 'Backspace' || key === 'Delete') {
-        handleNumberInput('');
-        event.preventDefault();
-      }
-
-      // Handle arrow keys for navigation
-      if (selectedCell && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
-        const [row, col] = selectedCell;
-        let newRow = row;
-        let newCol = col;
-
-        switch (key) {
-          case 'ArrowUp':
-            newRow = Math.max(0, row - 1);
-            break;
-          case 'ArrowDown':
-            newRow = Math.min(8, row + 1);
-            break;
-          case 'ArrowLeft':
-            newCol = Math.max(0, col - 1);
-            break;
-          case 'ArrowRight':
-            newCol = Math.min(8, col + 1);
-            break;
-          default:
-            break;
-        }
-
-        // Only move if the new cell is not a given cell
-        if (!originalBoard[newRow][newCol]) {
-          handleCellClick(newRow, newCol);
-        }
-        event.preventDefault();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedCell, originalBoard, board, handleCellClick, handleNumberInput]);
 
   useEffect(() => {
     // Start timer when a new game begins
@@ -457,6 +404,60 @@ const SudokuGame = () => {
     const secs = seconds % 60;
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
+
+  // Handle keyboard input
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (!selectedCell) return;
+
+      const key = event.key;
+
+      // Handle number keys 1-9
+      if (key >= '1' && key <= '9') {
+        handleNumberInput(parseInt(key));
+        event.preventDefault();
+      }
+
+      // Handle backspace and delete for erasing
+      if (key === 'Backspace' || key === 'Delete') {
+        handleNumberInput('');
+        event.preventDefault();
+      }
+
+      // Handle arrow keys for navigation
+      if (selectedCell && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+        const [row, col] = selectedCell;
+        let newRow = row;
+        let newCol = col;
+
+        switch (key) {
+          case 'ArrowUp':
+            newRow = Math.max(0, row - 1);
+            break;
+          case 'ArrowDown':
+            newRow = Math.min(8, row + 1);
+            break;
+          case 'ArrowLeft':
+            newCol = Math.max(0, col - 1);
+            break;
+          case 'ArrowRight':
+            newCol = Math.min(8, col + 1);
+            break;
+          default:
+            break;
+        }
+
+        // Only move if the new cell is not a given cell
+        if (!originalBoard[newRow][newCol]) {
+          handleCellClick(newRow, newCol);
+        }
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [selectedCell, originalBoard, board, handleCellClick, handleNumberInput]);
 
   const newGame = () => {
     generatePuzzle();
