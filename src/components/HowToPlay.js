@@ -169,22 +169,6 @@ const HowToPlay = () => {
       <Title>How to Play Sudoku</Title>
 
       <Section>
-        <SectionTitle>The Rules</SectionTitle>
-        <Paragraph>
-          Fill the 9×9 grid so that each row, column, and 3×3 box contains the numbers 1-9 exactly once.
-        </Paragraph>
-
-        <RuleHighlight>
-          <strong>Three simple rules:</strong>
-          <UnorderedList>
-            <ListItem>Each row must contain 1-9 without repetition</ListItem>
-            <ListItem>Each column must contain 1-9 without repetition</ListItem>
-            <ListItem>Each 3×3 box must contain 1-9 without repetition</ListItem>
-          </UnorderedList>
-        </RuleHighlight>
-      </Section>
-
-      <Section>
         <SectionTitle>How to Play</SectionTitle>
         <List>
           <ListItem><strong>Select difficulty:</strong> Choose Easy, Medium, or Hard</ListItem>

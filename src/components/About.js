@@ -126,18 +126,6 @@ const About = () => {
           I'm an aspiring software developer who built this Sudoku app to showcase my skills. Thanks for checking it out!
         </Paragraph>
       </Section>
-
-      <Section>
-        <SectionTitle>Features</SectionTitle>
-        <List>
-          <ListItem>Sudoku Solver - Solve any puzzle instantly</ListItem>
-          <ListItem>Interactive Game - Play with 3 difficulty levels</ListItem>
-          <ListItem>Real-time Validation - Get instant feedback</ListItem>
-          <ListItem>Keyboard Controls - Type numbers directly</ListItem>
-          <ListItem>Responsive Design - Works on all devices</ListItem>
-        </List>
-      </Section>
-
       <Section>
         <SectionTitle>Built With</SectionTitle>
         <Paragraph>
