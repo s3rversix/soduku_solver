@@ -59,16 +59,6 @@ const SectionTitle = styled.h2`
   }
 `;
 
-const SubsectionTitle = styled.h3`
-  color: #343a40;
-  margin: 1.25rem 0 0.75rem 0;
-  font-weight: 600;
-
-  @media (max-width: 768px) {
-    font-size: 1.1rem;
-    margin: 1rem 0 0.5rem 0;
-  }
-`;
 
 const Paragraph = styled.p`
   color: #495057;
@@ -173,9 +163,7 @@ const HowToPlay = () => {
         <List>
           <ListItem><strong>Select difficulty:</strong> Choose Easy, Medium, or Hard</ListItem>
           <ListItem><strong>Click a cell:</strong> Select where you want to place a number</ListItem>
-          <ListItem><strong>Type numbers:</strong> Use keyboard 1-9 to enter numbers</ListItem>
           <ListItem><strong>Use arrow keys:</strong> Navigate between cells</ListItem>
-          <ListItem><strong>Check progress:</strong> Click "Check" to see if you're correct</ListItem>
           <ListItem><strong>Solve:</strong> Click "Solve" if you need help</ListItem>
         </List>
       </Section>

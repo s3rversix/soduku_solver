@@ -11,13 +11,6 @@ const GameContainer = styled.div`
   min-height: 100vh;
 `;
 
-const ControlsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin: 1rem 0;
-`;
 
 const GridContainer = styled.div`
   display: flex;
@@ -27,17 +20,6 @@ const GridContainer = styled.div`
   padding: 0;
 `;
 
-const Title = styled.h1`
-  color: #343a40;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  font-weight: 700;
-
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-`;
 
 
 const SudokuGrid = styled.div`
@@ -159,47 +141,6 @@ const ActionButton = styled(Button)`
   }
 `;
 
-const DifficultySelector = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-`;
-
-const DifficultyLabel = styled.div`
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #343a40;
-`;
-
-const DifficultyButtonGroup = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    width: 100%;
-  }
-`;
-
-const DifficultyButton = styled(Button)`
-  background-color: ${(props) => (props.active ? '#0277bd' : '#e0e0e0')};
-  color: ${(props) => (props.active ? 'white' : '#333')};
-  width: 100%;
-  
-  &:hover {
-    background-color: ${(props) => (props.active ? '#015d99' : '#d0d0d0')};
-  }
-`;
 
 const Message = styled.div`
   margin-top: 1rem;
@@ -279,6 +220,8 @@ const SudokuGame = () => {
             break;
           case 'ArrowRight':
             newCol = Math.min(8, col + 1);
+            break;
+          default:
             break;
         }
 
