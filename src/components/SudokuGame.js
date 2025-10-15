@@ -235,7 +235,7 @@ const SudokuGame = () => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedCell, originalBoard, board]);
+  }, [selectedCell, originalBoard, board, handleCellClick, handleNumberInput]);
 
   useEffect(() => {
     // Start timer when a new game begins
