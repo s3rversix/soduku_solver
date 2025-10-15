@@ -11,12 +11,12 @@ const AppContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: 'Roboto', sans-serif;
 `;
 
 const Footer = styled.footer`
-  background-color: #343a40;
+  background-color: transparent;
   color: white;
   text-align: center;
   padding: 1rem 0;

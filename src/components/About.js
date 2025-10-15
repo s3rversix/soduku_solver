@@ -3,18 +3,26 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const AboutContainer = styled.div`
-  max-width: 800px;
-  margin: 1rem auto;
+  max-width: 600px;
+  margin: auto;
   padding: 1.5rem;
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   @media (max-width: 768px) {
-    max-width: 100%;
-    margin: 0.5rem;
+    max-width: calc(100% - 2rem);
+    margin: 0;
     padding: 1rem;
     border-radius: 10px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
   }
 `;
 
@@ -85,7 +93,7 @@ const Button = styled(Link)`
   display: block;
   flex: 1;
   padding: 0.75rem;
-  background-color: #007bff;
+  background-color: #0277bd;
   color: white;
   text-align: center;
   text-decoration: none;
@@ -94,81 +102,49 @@ const Button = styled(Link)`
   transition: background-color 0.2s;
   
   &:hover {
-    background-color: #0069d9;
+    background-color: #015d99;
     color: white;
   }
 `;
 
 const GreenButton = styled(Button)`
-  background-color: #28a745;
+  background-color: #0277bd;
   
   &:hover {
-    background-color: #218838;
+    background-color: #015d99;
   }
 `;
 
 const About = () => {
   return (
     <AboutContainer>
-      <Title>About Sudoku Master</Title>
-      
+      <Title>About</Title>
+
       <Section>
-        <SectionTitle>Who am I?</SectionTitle>
+        <SectionTitle>Hi, I'm Hilal!</SectionTitle>
         <Paragraph>
-          Hello! My name is Hilal, I am an aspiring software/web developer
-          looking for opportunities to demonstrate my skills through multiple
-          projects. Thank you for checking out Sudoku Master!
+          I'm an aspiring software developer who built this Sudoku app to showcase my skills. Thanks for checking it out!
         </Paragraph>
       </Section>
-      
-      <Section>
-        <SectionTitle>What is Sudoku Master?</SectionTitle>
-        <Paragraph>
-          Sudoku Master is a comprehensive web application that offers both a Sudoku solver and an interactive Sudoku game experience.
-          This dual-functionality application provides users with the flexibility to either solve existing puzzles they're stuck on
-          or enjoy playing new Sudoku puzzles with varying difficulty levels.
-        </Paragraph>
-      </Section>
-      
+
       <Section>
         <SectionTitle>Features</SectionTitle>
         <List>
-          <ListItem>
-            <strong>Sudoku Solver:</strong> Upload any valid Sudoku puzzle and our powerful algorithm will solve it for you instantly.
-          </ListItem>
-          <ListItem>
-            <strong>Interactive Sudoku Game:</strong> Play Sudoku puzzles with three difficulty levels (Easy, Medium, Hard).
-          </ListItem>
-          <ListItem>
-            <strong>Real-time Validation:</strong> Get immediate feedback on your moves as you play.
-          </ListItem>
-          <ListItem>
-            <strong>Timing and Progress Tracking:</strong> Monitor your progress with an integrated timer.
-          </ListItem>
-          <ListItem>
-            <strong>Responsive Design:</strong> Enjoy a smooth experience on any device.
-          </ListItem>
+          <ListItem>Sudoku Solver - Solve any puzzle instantly</ListItem>
+          <ListItem>Interactive Game - Play with 3 difficulty levels</ListItem>
+          <ListItem>Real-time Validation - Get instant feedback</ListItem>
+          <ListItem>Keyboard Controls - Type numbers directly</ListItem>
+          <ListItem>Responsive Design - Works on all devices</ListItem>
         </List>
       </Section>
-      
+
       <Section>
-        <SectionTitle>Technology Stack</SectionTitle>
+        <SectionTitle>Built With</SectionTitle>
         <Paragraph>
-          This application is built using modern web technologies:
+          React, Python Flask, and deployed on Vercel.
         </Paragraph>
-        <List>
-          <ListItem>
-            <strong>Frontend:</strong> React, React Router, Styled Components
-          </ListItem>
-          <ListItem>
-            <strong>Backend:</strong> Python Flask for the solving and puzzle generation algorithms
-          </ListItem>
-          <ListItem>
-            <strong>Deployment:</strong> Vercel for both frontend and backend hosting
-          </ListItem>
-        </List>
       </Section>
-      
+
       <ButtonContainer>
         <Button to="/">Try Solver</Button>
         <GreenButton to="/game">Play Game</GreenButton>

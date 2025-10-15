@@ -3,18 +3,26 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const HowToPlayContainer = styled.div`
-  max-width: 800px;
-  margin: 1rem auto;
+  max-width: 600px;
+  margin: auto;
   padding: 1.5rem;
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   @media (max-width: 768px) {
-    max-width: 100%;
-    margin: 0.5rem;
+    max-width: calc(100% - 2rem);
+    margin: 0;
     padding: 1rem;
     border-radius: 10px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
   }
 `;
 
@@ -133,7 +141,7 @@ const Button = styled(Link)`
   display: block;
   flex: 1;
   padding: 0.75rem;
-  background-color: #007bff;
+  background-color: #0277bd;
   color: white;
   text-align: center;
   text-decoration: none;
@@ -142,16 +150,16 @@ const Button = styled(Link)`
   transition: background-color 0.2s;
   
   &:hover {
-    background-color: #0069d9;
+    background-color: #015d99;
     color: white;
   }
 `;
 
 const GreenButton = styled(Button)`
-  background-color: #28a745;
+  background-color: #0277bd;
   
   &:hover {
-    background-color: #218838;
+    background-color: #015d99;
   }
 `;
 
@@ -159,102 +167,42 @@ const HowToPlay = () => {
   return (
     <HowToPlayContainer>
       <Title>How to Play Sudoku</Title>
-      
+
       <Section>
-        <SectionTitle>Basic Rules of Sudoku</SectionTitle>
+        <SectionTitle>The Rules</SectionTitle>
         <Paragraph>
-          Sudoku is a logic-based number placement puzzle. The objective is to fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 subgrids (also called "boxes") contains all of the digits from 1 to 9.
+          Fill the 9×9 grid so that each row, column, and 3×3 box contains the numbers 1-9 exactly once.
         </Paragraph>
-        
+
         <RuleHighlight>
-          <strong>The Rules:</strong>
+          <strong>Three simple rules:</strong>
           <UnorderedList>
-            <ListItem>Each row must contain the numbers 1-9 without repetition.</ListItem>
-            <ListItem>Each column must contain the numbers 1-9 without repetition.</ListItem>
-            <ListItem>Each of the nine 3×3 sub-boxes must contain the numbers 1-9 without repetition.</ListItem>
+            <ListItem>Each row must contain 1-9 without repetition</ListItem>
+            <ListItem>Each column must contain 1-9 without repetition</ListItem>
+            <ListItem>Each 3×3 box must contain 1-9 without repetition</ListItem>
           </UnorderedList>
         </RuleHighlight>
-        
-        <Paragraph>
-          The puzzle starts with some cells already filled with numbers. These are the "givens" or "clues." Your task is to fill in the rest of the grid while adhering to the three rules above.
-        </Paragraph>
       </Section>
-      
+
       <Section>
-        <SectionTitle>Solving Strategies</SectionTitle>
-        
-        <SubsectionTitle>1. Scanning</SubsectionTitle>
-        <Paragraph>
-          This involves checking each row, column, and 3×3 box to identify which numbers are missing and which positions are possible for each missing number.
-        </Paragraph>
-        
-        <SubsectionTitle>2. Elimination</SubsectionTitle>
-        <Paragraph>
-          If a number already exists in a row, column, or box, then it cannot be placed in any other cell in that same row, column, or box.
-        </Paragraph>
-        
-        <SubsectionTitle>3. Crosshatching</SubsectionTitle>
-        <Paragraph>
-          Look for cells where only one number can possibly go based on what numbers are already present in intersecting rows, columns, and boxes.
-        </Paragraph>
-        
-        <SubsectionTitle>4. Trial and Error</SubsectionTitle>
-        <Paragraph>
-          For more difficult puzzles, you might need to make an educated guess and see if it leads to a solution or a contradiction.
-        </Paragraph>
-      </Section>
-      
-      <Section>
-        <SectionTitle>How to Use Our Sudoku Game</SectionTitle>
+        <SectionTitle>How to Play</SectionTitle>
         <List>
-          <ListItem>
-            <strong>Select a difficulty:</strong> Choose from Easy, Medium, or Hard depending on your skill level.
-          </ListItem>
-          <ListItem>
-            <strong>Click on an empty cell:</strong> This will select the cell you want to fill.
-          </ListItem>
-          <ListItem>
-            <strong>Use the number pad:</strong> Click on one of the number buttons (1-9) to place that number in the selected cell.
-          </ListItem>
-          <ListItem>
-            <strong>Erase a number:</strong> If you want to remove a number, select the cell and click the "Erase" button.
-          </ListItem>
-          <ListItem>
-            <strong>Check your progress:</strong> Use the "Check" button to see if your current entries are correct.
-          </ListItem>
-          <ListItem>
-            <strong>Start a new game:</strong> Click the "New Game" button to generate a fresh puzzle.
-          </ListItem>
+          <ListItem><strong>Select difficulty:</strong> Choose Easy, Medium, or Hard</ListItem>
+          <ListItem><strong>Click a cell:</strong> Select where you want to place a number</ListItem>
+          <ListItem><strong>Type numbers:</strong> Use keyboard 1-9 to enter numbers</ListItem>
+          <ListItem><strong>Use arrow keys:</strong> Navigate between cells</ListItem>
+          <ListItem><strong>Check progress:</strong> Click "Check" to see if you're correct</ListItem>
+          <ListItem><strong>Solve:</strong> Click "Solve" if you need help</ListItem>
         </List>
-        
-        <Paragraph>
-          <strong>Note:</strong> The timer at the top tracks how long you've been playing. Challenge yourself to improve your time as you get better!
-        </Paragraph>
       </Section>
-      
+
       <Section>
-        <SectionTitle>Using the Sudoku Solver</SectionTitle>
+        <SectionTitle>Tips</SectionTitle>
         <Paragraph>
-          If you're stuck on a puzzle and need help, you can use our Sudoku Solver:
-        </Paragraph>
-        
-        <List>
-          <ListItem>
-            <strong>Enter the puzzle:</strong> Input the numbers of your puzzle into the grid. Leave empty cells blank.
-          </ListItem>
-          <ListItem>
-            <strong>Solve:</strong> Click the "Solve Puzzle" button and watch as our algorithm finds the solution.
-          </ListItem>
-          <ListItem>
-            <strong>Clear:</strong> To start over, use the "Clear Grid" button.
-          </ListItem>
-        </List>
-        
-        <Paragraph>
-          Our solver uses an efficient backtracking algorithm that can tackle even the most challenging Sudoku puzzles.
+          Start with easy puzzles and look for cells where only one number can fit. Use elimination - if a number already exists in a row, column, or box, it can't be placed again in that same area.
         </Paragraph>
       </Section>
-      
+
       <ButtonContainer>
         <Button to="/">Try Solver</Button>
         <GreenButton to="/game">Play Game</GreenButton>

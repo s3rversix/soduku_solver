@@ -3,10 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavbarContainer = styled.nav`
-  background-color: #343a40;
+  background-color: transparent;
   padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
   position: relative;
@@ -14,23 +14,10 @@ const NavbarContainer = styled.nav`
   @media (max-width: 768px) {
     padding: 1rem;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
 `;
 
-const Logo = styled(Link)`
-  color: white;
-  text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: 700;
-  
-  &:hover {
-    color: #f8f9fa;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 1.3rem;
-  }
-`;
 
 const NavLinks = styled.div`
   display: flex;
@@ -96,19 +83,17 @@ const MenuButton = styled.button`
 const Navbar = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-  
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   return (
     <NavbarContainer>
-      <Logo to="/">Sudoku Master</Logo>
-      
       <MenuButton onClick={toggleMenu}>
         {menuOpen ? '✕' : '☰'}
       </MenuButton>
-      
+
       <NavLinks isOpen={menuOpen}>
         <NavLink to="/" active={location.pathname === '/' ? 1 : 0} onClick={() => setMenuOpen(false)}>
           Solver

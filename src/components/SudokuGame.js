@@ -3,22 +3,28 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const GameContainer = styled.div`
-  max-width: 800px;
-  margin: 1rem auto;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+`;
 
-  @media (max-width: 768px) {
-    max-width: 100%;
-    margin: 0.5rem;
-    padding: 0.75rem;
-    border-radius: 10px;
-  }
+const ControlsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+`;
+
+const GridContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0;
 `;
 
 const Title = styled.h1`
@@ -33,42 +39,6 @@ const Title = styled.h1`
   }
 `;
 
-const GameLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  width: 100%;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 1rem;
-  }
-`;
-
-const LeftPanel = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-const RightPanel = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-width: 240px;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    min-width: unset;
-  }
-`;
 
 const SudokuGrid = styled.div`
   display: grid;
@@ -85,21 +55,21 @@ const SudokuGrid = styled.div`
 `;
 
 const Cell = styled.input`
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 500;
   border: none;
   outline: none;
-  background-color: ${(props) => 
+  background-color: ${(props) =>
     props.isSelected ? '#b3e5fc' :
-    props.isHighlighted ? '#e3e3e3' : 
-    props.isDimmed ? '#f0f0f0' : 
-    props.isGiven ? '#f9f9f9' : 'white'};
+      props.isHighlighted ? '#e3e3e3' :
+        props.isDimmed ? '#f0f0f0' :
+          props.isGiven ? '#f9f9f9' : 'white'};
   color: ${(props) => (props.isGiven ? '#343a40' : props.isError ? 'red' : '#0277bd')};
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
   font-weight: ${(props) => (props.isGiven ? '700' : '500')};
 
   &:focus {
@@ -121,10 +91,16 @@ const Cell = styled.input`
 
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 1rem;
-  gap: 0.75rem;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const Button = styled.button`
@@ -133,17 +109,41 @@ const Button = styled.button`
   border-radius: 5px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
   
   &:focus {
     outline: none;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+    animation: shine 0.6s ease;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
   }
 `;
 
 const ActionButton = styled(Button)`
   background-color: #0277bd;
   color: white;
-  width: 100%;
+  min-width: 120px;
   
   &:hover {
     background-color: #015d99;
@@ -153,14 +153,25 @@ const ActionButton = styled(Button)`
     background-color: #cccccc;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const DifficultySelector = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
   width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 `;
 
 const DifficultyLabel = styled.div`
@@ -171,9 +182,13 @@ const DifficultyLabel = styled.div`
 
 const DifficultyButtonGroup = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  flex-direction: row;
   gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const DifficultyButton = styled(Button)`
@@ -197,58 +212,20 @@ const Message = styled.div`
   display: ${(props) => (props.show ? 'block' : 'none')};
 `;
 
-const NumberPad = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 0.5rem;
-  margin-top: 1rem;
-  width: 100%;
-
-  @media (max-width: 768px) {
-    max-width: 300px;
-  }
-`;
-
-const NumberButton = styled(Button)`
-  background-color: #e0e0e0;
-  color: #333;
-  padding: 0.75rem;
-  font-size: 1.2rem;
-  
-  &:hover {
-    background-color: #d0d0d0;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0.5rem;
-    font-size: 1rem;
-  }
-`;
-
-const EraseButton = styled(Button)`
-  background-color: #f44336;
-  color: white;
-  width: 100%;
-  margin-top: 0.5rem;
-  
-  &:hover {
-    background-color: #d32f2f;
-  }
-`;
 
 const TimerContainer = styled.div`
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
 `;
 
 const Timer = styled.div`
   font-size: 1.2rem;
   font-weight: 500;
   padding: 0.5rem;
-  background-color: #f8f9fa;
-  border-radius: 5px;
   text-align: center;
+  color: white;
 `;
 
 const SudokuGame = () => {
@@ -257,13 +234,65 @@ const SudokuGame = () => {
   const [originalBoard, setOriginalBoard] = useState(Array(9).fill().map(() => Array(9).fill(false)));
   const [selectedCell, setSelectedCell] = useState(null);
   const [highlightedCells, setHighlightedCells] = useState([]);
-  const [difficulty, setDifficulty] = useState('medium');
+  const [difficulty] = useState('medium');
   const [message, setMessage] = useState({ text: '', isError: false, show: false });
   const [time, setTime] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
   const [gameComplete, setGameComplete] = useState(false);
   const [errors, setErrors] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
+
+  // Handle keyboard input
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (!selectedCell) return;
+
+      const key = event.key;
+
+      // Handle number keys 1-9
+      if (key >= '1' && key <= '9') {
+        handleNumberInput(parseInt(key));
+        event.preventDefault();
+      }
+
+      // Handle backspace and delete for erasing
+      if (key === 'Backspace' || key === 'Delete') {
+        handleNumberInput('');
+        event.preventDefault();
+      }
+
+      // Handle arrow keys for navigation
+      if (selectedCell && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+        const [row, col] = selectedCell;
+        let newRow = row;
+        let newCol = col;
+
+        switch (key) {
+          case 'ArrowUp':
+            newRow = Math.max(0, row - 1);
+            break;
+          case 'ArrowDown':
+            newRow = Math.min(8, row + 1);
+            break;
+          case 'ArrowLeft':
+            newCol = Math.max(0, col - 1);
+            break;
+          case 'ArrowRight':
+            newCol = Math.min(8, col + 1);
+            break;
+        }
+
+        // Only move if the new cell is not a given cell
+        if (!originalBoard[newRow][newCol]) {
+          handleCellClick(newRow, newCol);
+        }
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [selectedCell, originalBoard, board]);
 
   useEffect(() => {
     // Start timer when a new game begins
@@ -289,10 +318,10 @@ const SudokuGame = () => {
       setTime(0);
       setGameComplete(false);
       setErrors(new Set());
-      
+
       // Call the API to generate a new puzzle with the selected difficulty
       const response = await axios.get(`/api/generate?difficulty=${difficulty}`);
-      
+
       if (response.data.error) {
         setMessage({
           text: response.data.error,
@@ -301,13 +330,13 @@ const SudokuGame = () => {
         });
         return;
       }
-      
+
       const { puzzle, solution } = response.data;
-      
+
       // Convert the puzzle to our board format and track which cells are given
       const newBoard = [];
       const newOriginalBoard = [];
-      
+
       for (let i = 0; i < 9; i++) {
         const row = [];
         const originalRow = [];
@@ -318,15 +347,15 @@ const SudokuGame = () => {
         newBoard.push(row);
         newOriginalBoard.push(originalRow);
       }
-      
+
       setBoard(newBoard);
       setOriginalBoard(newOriginalBoard);
       setSolution(solution);
       setTimerActive(true);
       setMessage({
-        text: `New ${difficulty} puzzle generated!`,
+        text: '',
         isError: false,
-        show: true
+        show: false
       });
     } catch (error) {
       setMessage({
@@ -344,37 +373,26 @@ const SudokuGame = () => {
     generatePuzzle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
-  // When difficulty changes, generate a new puzzle
-  useEffect(() => {
-    if (timerActive) {
-      // Only generate a new puzzle if we're already playing
-      const confirmed = window.confirm('Do you want to start a new game with this difficulty?');
-      if (confirmed) {
-        generatePuzzle();
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [difficulty]);
+
 
   const handleCellClick = (row, col) => {
     if (originalBoard[row][col]) return; // Can't select given cells
-    
+
     setSelectedCell([row, col]);
-    
+
     // Highlight row, column, and box
     const cells = [];
-    
+
     // Highlight row
     for (let c = 0; c < 9; c++) {
       cells.push(`${row}-${c}`);
     }
-    
+
     // Highlight column
     for (let r = 0; r < 9; r++) {
       cells.push(`${r}-${col}`);
     }
-    
+
     // Highlight 3x3 box
     const boxRow = Math.floor(row / 3) * 3;
     const boxCol = Math.floor(col / 3) * 3;
@@ -383,7 +401,7 @@ const SudokuGame = () => {
         cells.push(`${boxRow + r}-${boxCol + c}`);
       }
     }
-    
+
     // Highlight all cells with the same number
     const clickedValue = board[row][col];
     if (clickedValue !== '') {
@@ -395,45 +413,81 @@ const SudokuGame = () => {
         }
       }
     }
-    
+
     setHighlightedCells(cells);
   };
 
   const handleNumberInput = (number) => {
     if (!selectedCell) return;
-    
+
     const [row, col] = selectedCell;
     const newBoard = [...board];
-    
+
     // Check if the input matches the solution
     const errorKey = `${row}-${col}`;
     const newErrors = new Set(errors);
-    
+
     if (number === '') {
       newBoard[row][col] = '';
       newErrors.delete(errorKey);
     } else {
       const numberValue = number.toString();
       newBoard[row][col] = numberValue;
-      
-      // Check if the value is correct according to the solution
+
+      // Real-time validation - check if the value is correct according to the solution
       if (numberValue !== solution[row][col].toString()) {
         newErrors.add(errorKey);
       } else {
         newErrors.delete(errorKey);
       }
+
+      // Also check for Sudoku rule violations (same number in row, column, or box)
+      const ruleViolations = checkSudokuRules(newBoard, row, col, numberValue);
+      ruleViolations.forEach(violation => newErrors.add(violation));
     }
-    
+
     setBoard(newBoard);
     setErrors(newErrors);
-    
+
     // Check if the game is complete
     checkCompletion(newBoard);
   };
 
+  // Check for Sudoku rule violations
+  const checkSudokuRules = (board, row, col, value) => {
+    const violations = new Set();
+
+    // Check row
+    for (let c = 0; c < 9; c++) {
+      if (c !== col && board[row][c] === value) {
+        violations.add(`${row}-${c}`);
+      }
+    }
+
+    // Check column
+    for (let r = 0; r < 9; r++) {
+      if (r !== row && board[r][col] === value) {
+        violations.add(`${r}-${col}`);
+      }
+    }
+
+    // Check 3x3 box
+    const boxRow = Math.floor(row / 3) * 3;
+    const boxCol = Math.floor(col / 3) * 3;
+    for (let r = boxRow; r < boxRow + 3; r++) {
+      for (let c = boxCol; c < boxCol + 3; c++) {
+        if ((r !== row || c !== col) && board[r][c] === value) {
+          violations.add(`${r}-${c}`);
+        }
+      }
+    }
+
+    return violations;
+  };
+
   const checkCompletion = (currentBoard) => {
     let isComplete = true;
-    
+
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         if (currentBoard[i][j] === '' || currentBoard[i][j] !== solution[i][j].toString()) {
@@ -443,7 +497,7 @@ const SudokuGame = () => {
       }
       if (!isComplete) break;
     }
-    
+
     if (isComplete) {
       setTimerActive(false);
       setGameComplete(true);
@@ -465,10 +519,29 @@ const SudokuGame = () => {
     generatePuzzle();
   };
 
+  const solvePuzzle = () => {
+    const solvedBoard = [...solution];
+    const newBoard = [];
+
+    solvedBoard.forEach((row) => {
+      const newRow = row.map((cell) => cell.toString());
+      newBoard.push(newRow);
+    });
+
+    setBoard(newBoard);
+    setTimerActive(false);
+    setGameComplete(true);
+    setMessage({
+      text: 'Puzzle solved!',
+      isError: false,
+      show: true
+    });
+  };
+
   const checkPuzzle = () => {
     let hasErrors = false;
     const newErrors = new Set();
-    
+
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         if (board[i][j] !== '' && board[i][j] !== solution[i][j].toString()) {
@@ -477,9 +550,9 @@ const SudokuGame = () => {
         }
       }
     }
-    
+
     setErrors(newErrors);
-    
+
     if (hasErrors) {
       setMessage({
         text: 'There are errors in your solution. Check the highlighted cells.',
@@ -505,101 +578,49 @@ const SudokuGame = () => {
 
   return (
     <GameContainer>
-      <Title>Sudoku Game</Title>
-      
-      <GameLayout>
-        <LeftPanel>
-          <TimerContainer>
-            <Timer>Time: {formatTime(time)}</Timer>
-          </TimerContainer>
-          
-          <SudokuGrid>
-            {board.map((row, rowIndex) =>
-              row.map((cell, colIndex) => (
-                <Cell
-                  key={`${rowIndex}-${colIndex}`}
-                  type="text"
-                  value={cell}
-                  readOnly={true}
-                  onClick={() => handleCellClick(rowIndex, colIndex)}
-                  isGiven={originalBoard[rowIndex][colIndex]}
-                  isDimmed={isDimmed(rowIndex, colIndex)}
-                  isSelected={selectedCell && selectedCell[0] === rowIndex && selectedCell[1] === colIndex}
-                  isHighlighted={highlightedCells.includes(`${rowIndex}-${colIndex}`)}
-                  isError={errors.has(`${rowIndex}-${colIndex}`)}
-                />
-              ))
-            )}
-          </SudokuGrid>
-          
-          <Message show={message.show} error={message.isError}>
-            {message.text}
-          </Message>
-        </LeftPanel>
-        
-        <RightPanel>
-          <DifficultySelector>
-            <DifficultyLabel>Difficulty</DifficultyLabel>
-            <DifficultyButtonGroup>
-              <DifficultyButton 
-                active={difficulty === 'easy'} 
-                onClick={() => setDifficulty('easy')}
-                disabled={isLoading}
-              >
-                Easy
-              </DifficultyButton>
-              <DifficultyButton 
-                active={difficulty === 'medium'} 
-                onClick={() => setDifficulty('medium')}
-                disabled={isLoading}
-              >
-                Medium
-              </DifficultyButton>
-              <DifficultyButton 
-                active={difficulty === 'hard'} 
-                onClick={() => setDifficulty('hard')}
-                disabled={isLoading}
-              >
-                Hard
-              </DifficultyButton>
-            </DifficultyButtonGroup>
-          </DifficultySelector>
-          
-          <NumberPad>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-              <NumberButton 
-                key={num} 
-                onClick={() => handleNumberInput(num)} 
-                disabled={isLoading || !selectedCell}
-              >
-                {num}
-              </NumberButton>
-            ))}
-          </NumberPad>
-          
-          <EraseButton 
-            onClick={() => handleNumberInput('')} 
-            disabled={isLoading || !selectedCell}
-          >
-            Erase
-          </EraseButton>
-          
-          <ButtonContainer>
-            <ActionButton 
-              onClick={newGame} 
-              disabled={isLoading}
-            >
-              {isLoading ? 'Loading...' : 'New Game'}
-            </ActionButton>
-            <ActionButton 
-              onClick={checkPuzzle} 
-              disabled={gameComplete || isLoading}
-            >
-              Check
-            </ActionButton>
-          </ButtonContainer>
-        </RightPanel>
-      </GameLayout>
+      <TimerContainer>
+        <Timer>Time: {formatTime(time)}</Timer>
+      </TimerContainer>
+
+      <GridContainer>
+        <SudokuGrid>
+          {board.map((row, rowIndex) =>
+            row.map((cell, colIndex) => (
+              <Cell
+                key={`${rowIndex}-${colIndex}`}
+                type="text"
+                value={cell}
+                readOnly={true}
+                onClick={() => handleCellClick(rowIndex, colIndex)}
+                isGiven={originalBoard[rowIndex][colIndex]}
+                isDimmed={isDimmed(rowIndex, colIndex)}
+                isSelected={selectedCell && selectedCell[0] === rowIndex && selectedCell[1] === colIndex}
+                isHighlighted={highlightedCells.includes(`${rowIndex}-${colIndex}`)}
+                isError={errors.has(`${rowIndex}-${colIndex}`)}
+              />
+            ))
+          )}
+        </SudokuGrid>
+      </GridContainer>
+
+      <ButtonContainer>
+        <ActionButton
+          onClick={newGame}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : 'New Game'}
+        </ActionButton>
+        <ActionButton
+          onClick={solvePuzzle}
+          disabled={gameComplete || isLoading}
+        >
+          Solve
+        </ActionButton>
+      </ButtonContainer>
+
+      <Message show={message.show} error={message.isError}>
+        {message.text}
+      </Message>
     </GameContainer>
   );
 };

@@ -3,22 +3,28 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const SolverContainer = styled.div`
-  max-width: 600px;
-  margin: 1rem auto;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+`;
 
-  @media (max-width: 768px) {
-    max-width: 100%;
-    margin: 0.5rem;
-    padding: 0.75rem;
-    border-radius: 10px;
-  }
+const ControlsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+`;
+
+const GridContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0;
 `;
 
 const Title = styled.h1`
@@ -48,16 +54,16 @@ const SudokuGrid = styled.div`
 `;
 
 const Cell = styled.input`
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 500;
   border: none;
   outline: none;
-  background-color: ${(props) => 
-    props.isHighlighted ? '#e3e3e3' : 
-    props.isDimmed ? '#f0f0f0' : 'white'};
+  background-color: ${(props) =>
+    props.isHighlighted ? '#e3e3e3' :
+      props.isDimmed ? '#f0f0f0' : 'white'};
   cursor: pointer;
   transition: background-color 0.2s ease;
 
@@ -80,13 +86,14 @@ const Cell = styled.input`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 1rem;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0;
 
   @media (max-width: 768px) {
-    flex-direction: ${props => props.vertical ? 'column' : 'row'};
-    gap: ${props => props.vertical ? '0.5rem' : '0'};
+    flex-direction: column;
+    width: 100%;
   }
 `;
 
@@ -96,35 +103,59 @@ const Button = styled.button`
   border-radius: 5px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  width: 48%;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  position: relative;
+  overflow: hidden;
   
   &:focus {
     outline: none;
   }
 
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+    animation: shine 0.6s ease;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
   @media (max-width: 768px) {
-    width: ${props => props.fullWidthMobile ? '100%' : '48%'};
+    width: 100%;
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
   }
 `;
 
 const SolveButton = styled(Button)`
-  background-color: #28a745;
+  background-color: #0277bd;
   color: white;
   
   &:hover {
-    background-color: #218838;
+    background-color: #015d99;
   }
 `;
 
 const ClearButton = styled(Button)`
-  background-color: #6c757d;
+  background-color: #0277bd;
   color: white;
   
   &:hover {
-    background-color: #5a6268;
+    background-color: #015d99;
   }
 `;
 
@@ -159,17 +190,17 @@ const SudokuSolver = () => {
 
     // Highlight row, column, and box
     const cells = [];
-    
+
     // Highlight row
     for (let c = 0; c < 9; c++) {
       cells.push(`${row}-${c}`);
     }
-    
+
     // Highlight column
     for (let r = 0; r < 9; r++) {
       cells.push(`${r}-${col}`);
     }
-    
+
     // Highlight 3x3 box
     const boxRow = Math.floor(row / 3) * 3;
     const boxCol = Math.floor(col / 3) * 3;
@@ -178,7 +209,7 @@ const SudokuSolver = () => {
         cells.push(`${boxRow + r}-${boxCol + c}`);
       }
     }
-    
+
     setHighlightedCells(cells);
   };
 
@@ -186,7 +217,7 @@ const SudokuSolver = () => {
     try {
       setIsLoading(true);
       setMessage({ text: '', isError: false, show: false });
-      
+
       // Create form data in the format expected by the Flask API
       const formData = new URLSearchParams();
       board.forEach((row, rowIndex) => {
@@ -210,18 +241,18 @@ const SudokuSolver = () => {
       } else {
         const solvedBoard = response.data;
         const newBoard = [];
-        
+
         solvedBoard.forEach((row) => {
           const newRow = row.map((cell) => (cell === 0 ? '' : cell.toString()));
           newBoard.push(newRow);
         });
-        
+
         setBoard(newBoard);
         setSolved(true);
         setMessage({
-          text: 'Puzzle solved successfully!',
+          text: '',
           isError: false,
-          show: true,
+          show: false,
         });
       }
     } catch (error) {
@@ -252,39 +283,41 @@ const SudokuSolver = () => {
 
   return (
     <SolverContainer>
-      <Title>Sudoku Solver</Title>
-      
-      <SudokuGrid>
-        {board.map((row, rowIndex) =>
-          row.map((cell, colIndex) => (
-            <Cell
-              key={`${rowIndex}-${colIndex}`}
-              type="number"
-              min="1"
-              max="9"
-              value={cell}
-              onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
-              onClick={() => handleCellClick(rowIndex, colIndex)}
-              isDimmed={isDimmed(rowIndex, colIndex)}
-              isHighlighted={highlightedCells.includes(`${rowIndex}-${colIndex}`)}
-              disabled={isLoading}
-            />
-          ))
-        )}
-      </SudokuGrid>
-      
-      <ButtonContainer>
-        <SolveButton onClick={solveSudoku} disabled={isLoading}>
-          {isLoading ? 'Solving...' : 'Solve Puzzle'}
-        </SolveButton>
-        <ClearButton onClick={clearBoard} disabled={isLoading}>
-          Clear Grid
-        </ClearButton>
-      </ButtonContainer>
-      
-      <Message show={message.show} error={message.isError}>
-        {message.text}
-      </Message>
+      <GridContainer>
+        <SudokuGrid>
+          {board.map((row, rowIndex) =>
+            row.map((cell, colIndex) => (
+              <Cell
+                key={`${rowIndex}-${colIndex}`}
+                type="number"
+                min="1"
+                max="9"
+                value={cell}
+                onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
+                onClick={() => handleCellClick(rowIndex, colIndex)}
+                isDimmed={isDimmed(rowIndex, colIndex)}
+                isHighlighted={highlightedCells.includes(`${rowIndex}-${colIndex}`)}
+                disabled={isLoading}
+              />
+            ))
+          )}
+        </SudokuGrid>
+      </GridContainer>
+
+      <ControlsContainer>
+        <ButtonContainer>
+          <SolveButton onClick={solveSudoku} disabled={isLoading}>
+            {isLoading ? 'Solving...' : 'Solve Puzzle'}
+          </SolveButton>
+          <ClearButton onClick={clearBoard} disabled={isLoading}>
+            Clear Grid
+          </ClearButton>
+        </ButtonContainer>
+
+        <Message show={message.show} error={message.isError}>
+          {message.text}
+        </Message>
+      </ControlsContainer>
     </SolverContainer>
   );
 };
