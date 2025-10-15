@@ -505,7 +505,15 @@ const SudokuGame = () => {
                 key={`${rowIndex}-${colIndex}`}
                 type="text"
                 value={cell}
-                readOnly={true}
+                readOnly={originalBoard[rowIndex][colIndex]}
+                onChange={(e) => {
+                  if (!originalBoard[rowIndex][colIndex]) {
+                    const value = e.target.value;
+                    if (value === '' || (parseInt(value) >= 1 && parseInt(value) <= 9)) {
+                      handleNumberInput(value === '' ? '' : parseInt(value));
+                    }
+                  }
+                }}
                 onClick={() => handleCellClick(rowIndex, colIndex)}
                 isGiven={originalBoard[rowIndex][colIndex]}
                 isDimmed={isDimmed(rowIndex, colIndex)}
