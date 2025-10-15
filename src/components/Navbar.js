@@ -13,24 +13,58 @@ const NavbarContainer = styled.nav`
 
   @media (max-width: 768px) {
     padding: 1rem;
-    flex-wrap: wrap;
     justify-content: space-between;
+    position: relative;
   }
 `;
 
-
-const NavLinks = styled.div`
+const DesktopNavLinks = styled.div`
   display: flex;
   gap: 1.5rem;
 
   @media (max-width: 768px) {
-    display: ${props => props.isOpen ? 'flex' : 'none'};
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 100%;
-    padding-top: 1rem;
-    margin-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
+  }
+`;
+
+const MobileDrawer = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: ${props => props.isOpen ? '0' : '-300px'};
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 2rem 0;
+  }
+`;
+
+const MobileNavLinks = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 2rem 0;
+`;
+
+const Overlay = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: ${props => props.isOpen ? 'block' : 'none'};
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    transition: opacity 0.3s ease-in-out;
   }
 `;
 
@@ -61,8 +95,18 @@ const NavLink = styled(Link)`
   }
 
   @media (max-width: 768px) {
-    padding: 0.6rem 0;
+    padding: 1rem 2rem;
     width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1.1rem;
+    
+    &:after {
+      display: none;
+    }
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
   }
 `;
 
@@ -74,6 +118,25 @@ const MenuButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.3rem;
+  z-index: 1001;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const CloseButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1001;
 
   @media (max-width: 768px) {
     display: block;
@@ -88,27 +151,56 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
-  return (
-    <NavbarContainer>
-      <MenuButton onClick={toggleMenu}>
-        {menuOpen ? '✕' : '☰'}
-      </MenuButton>
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
 
-      <NavLinks isOpen={menuOpen}>
-        <NavLink to="/" active={location.pathname === '/' ? 1 : 0} onClick={() => setMenuOpen(false)}>
-          Solver
-        </NavLink>
-        <NavLink to="/game" active={location.pathname === '/game' ? 1 : 0} onClick={() => setMenuOpen(false)}>
-          Play Game
-        </NavLink>
-        <NavLink to="/how-to-play" active={location.pathname === '/how-to-play' ? 1 : 0} onClick={() => setMenuOpen(false)}>
-          How to Play
-        </NavLink>
-        <NavLink to="/about" active={location.pathname === '/about' ? 1 : 0} onClick={() => setMenuOpen(false)}>
-          About
-        </NavLink>
-      </NavLinks>
-    </NavbarContainer>
+  return (
+    <>
+      <NavbarContainer>
+        <MenuButton onClick={toggleMenu}>
+          ☰
+        </MenuButton>
+
+        <DesktopNavLinks>
+          <NavLink to="/" active={location.pathname === '/' ? 1 : 0}>
+            Solver
+          </NavLink>
+          <NavLink to="/game" active={location.pathname === '/game' ? 1 : 0}>
+            Play Game
+          </NavLink>
+          <NavLink to="/how-to-play" active={location.pathname === '/how-to-play' ? 1 : 0}>
+            How to Play
+          </NavLink>
+          <NavLink to="/about" active={location.pathname === '/about' ? 1 : 0}>
+            About
+          </NavLink>
+        </DesktopNavLinks>
+      </NavbarContainer>
+
+      <Overlay isOpen={menuOpen} onClick={closeMenu} />
+
+      <MobileDrawer isOpen={menuOpen}>
+        <CloseButton onClick={closeMenu}>
+          ✕
+        </CloseButton>
+
+        <MobileNavLinks>
+          <NavLink to="/" active={location.pathname === '/' ? 1 : 0} onClick={closeMenu}>
+            Solver
+          </NavLink>
+          <NavLink to="/game" active={location.pathname === '/game' ? 1 : 0} onClick={closeMenu}>
+            Play Game
+          </NavLink>
+          <NavLink to="/how-to-play" active={location.pathname === '/how-to-play' ? 1 : 0} onClick={closeMenu}>
+            How to Play
+          </NavLink>
+          <NavLink to="/about" active={location.pathname === '/about' ? 1 : 0} onClick={closeMenu}>
+            About
+          </NavLink>
+        </MobileNavLinks>
+      </MobileDrawer>
+    </>
   );
 };
 

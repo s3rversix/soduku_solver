@@ -16,7 +16,7 @@ const AboutContainer = styled.div`
 
   @media (max-width: 768px) {
     max-width: calc(100% - 2rem);
-    margin: 0;
+    margin: 2rem auto;
     padding: 1rem;
     border-radius: 10px;
     position: relative;
@@ -111,19 +111,19 @@ const About = () => {
           I'm an aspiring software developer who built this Sudoku app to showcase my skills. Thanks for checking it out!
         </Paragraph>
       </Section>
-        <Section>
-          <SectionTitle>Built With</SectionTitle>
-          <Paragraph>
-            React, Python Flask, and deployed on Vercel.
-          </Paragraph>
-        </Section>
+      <Section>
+        <SectionTitle>Built With</SectionTitle>
+        <Paragraph>
+          React, Python Flask, and deployed on Vercel.
+        </Paragraph>
+      </Section>
 
-        <Section>
-          <SectionTitle>Check out my other work</SectionTitle>
-          <Paragraph>
-            Visit my portfolio at <a href="https://hilalmanji.vercel.app" target="_blank" rel="noopener noreferrer" style={{color: '#0277bd', textDecoration: 'none'}}>hilalmanji.vercel.app</a>
-          </Paragraph>
-        </Section>
+      <Section>
+        <SectionTitle>Check out my other work</SectionTitle>
+        <Paragraph>
+          Visit my portfolio at <a href="https://hilalmanji.vercel.app" target="_blank" rel="noopener noreferrer" style={{ color: '#0277bd', textDecoration: 'none' }}>hilalmanji.vercel.app</a>
+        </Paragraph>
+      </Section>
 
       <ButtonContainer>
         <Button to="/">Try Solver</Button>

@@ -16,7 +16,7 @@ const HowToPlayContainer = styled.div`
 
   @media (max-width: 768px) {
     max-width: calc(100% - 2rem);
-    margin: 0;
+    margin: 2rem auto;
     padding: 1rem;
     border-radius: 10px;
     position: relative;
