@@ -27,17 +27,6 @@ const GridContainer = styled.div`
   padding: 0;
 `;
 
-const Title = styled.h1`
-  color: #343a40;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  font-weight: 700;
-
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-`;
 
 const SudokuGrid = styled.div`
   display: grid;

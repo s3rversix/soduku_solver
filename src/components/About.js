@@ -62,21 +62,6 @@ const Paragraph = styled.p`
   }
 `;
 
-const List = styled.ul`
-  color: #495057;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  margin-left: 1.5rem;
-
-  @media (max-width: 768px) {
-    font-size: 0.95rem;
-    margin-left: 1.2rem;
-  }
-`;
-
-const ListItem = styled.li`
-  margin-bottom: 0.5rem;
-`;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -126,12 +111,19 @@ const About = () => {
           I'm an aspiring software developer who built this Sudoku app to showcase my skills. Thanks for checking it out!
         </Paragraph>
       </Section>
-      <Section>
-        <SectionTitle>Built With</SectionTitle>
-        <Paragraph>
-          React, Python Flask, and deployed on Vercel.
-        </Paragraph>
-      </Section>
+        <Section>
+          <SectionTitle>Built With</SectionTitle>
+          <Paragraph>
+            React, Python Flask, and deployed on Vercel.
+          </Paragraph>
+        </Section>
+
+        <Section>
+          <SectionTitle>Check out my other work</SectionTitle>
+          <Paragraph>
+            Visit my portfolio at <a href="https://hilalmanji.vercel.app" target="_blank" rel="noopener noreferrer" style={{color: '#0277bd', textDecoration: 'none'}}>hilalmanji.vercel.app</a>
+          </Paragraph>
+        </Section>
 
       <ButtonContainer>
         <Button to="/">Try Solver</Button>

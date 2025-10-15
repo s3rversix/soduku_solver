@@ -82,17 +82,6 @@ const List = styled.ol`
   }
 `;
 
-const UnorderedList = styled.ul`
-  color: #495057;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  margin-left: 1.5rem;
-
-  @media (max-width: 768px) {
-    font-size: 0.95rem;
-    margin-left: 1.2rem;
-  }
-`;
 
 const ListItem = styled.li`
   margin-bottom: 0.75rem;
@@ -102,18 +91,6 @@ const ListItem = styled.li`
   }
 `;
 
-const RuleHighlight = styled.div`
-  background-color: #f8f9fa;
-  border-left: 4px solid #0277bd;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 0 5px 5px 0;
-
-  @media (max-width: 768px) {
-    padding: 0.75rem;
-    margin: 0.75rem 0;
-  }
-`;
 
 const ButtonContainer = styled.div`
   display: flex;

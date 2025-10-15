@@ -481,35 +481,6 @@ const SudokuGame = () => {
     });
   };
 
-  const checkPuzzle = () => {
-    let hasErrors = false;
-    const newErrors = new Set();
-
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (board[i][j] !== '' && board[i][j] !== solution[i][j].toString()) {
-          newErrors.add(`${i}-${j}`);
-          hasErrors = true;
-        }
-      }
-    }
-
-    setErrors(newErrors);
-
-    if (hasErrors) {
-      setMessage({
-        text: 'There are errors in your solution. Check the highlighted cells.',
-        isError: true,
-        show: true
-      });
-    } else {
-      setMessage({
-        text: 'Looking good so far!',
-        isError: false,
-        show: true
-      });
-    }
-  };
 
   const isDimmed = (row, col) => {
     return (
