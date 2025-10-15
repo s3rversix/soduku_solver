@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -318,7 +318,7 @@ const SudokuGame = () => {
   }, []);
 
 
-  const handleCellClick = (row, col) => {
+  const handleCellClick = useCallback((row, col) => {
     if (originalBoard[row][col]) return; // Can't select given cells
 
     setSelectedCell([row, col]);
@@ -358,9 +358,65 @@ const SudokuGame = () => {
     }
 
     setHighlightedCells(cells);
-  };
+  }, [originalBoard, board]);
 
-  const handleNumberInput = (number) => {
+  // Check for Sudoku rule violations
+  const checkSudokuRules = useCallback((board, row, col, value) => {
+    const violations = new Set();
+
+    // Check row
+    for (let c = 0; c < 9; c++) {
+      if (c !== col && board[row][c] === value) {
+        violations.add(`${row}-${c}`);
+      }
+    }
+
+    // Check column
+    for (let r = 0; r < 9; r++) {
+      if (r !== row && board[r][col] === value) {
+        violations.add(`${r}-${col}`);
+      }
+    }
+
+    // Check 3x3 box
+    const boxRow = Math.floor(row / 3) * 3;
+    const boxCol = Math.floor(col / 3) * 3;
+    for (let r = boxRow; r < boxRow + 3; r++) {
+      for (let c = boxCol; c < boxCol + 3; c++) {
+        if ((r !== row || c !== col) && board[r][c] === value) {
+          violations.add(`${r}-${c}`);
+        }
+      }
+    }
+
+    return violations;
+  }, []);
+
+  const checkCompletion = useCallback((currentBoard) => {
+    let isComplete = true;
+
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (currentBoard[i][j] === '' || currentBoard[i][j] !== solution[i][j].toString()) {
+          isComplete = false;
+          break;
+        }
+      }
+      if (!isComplete) break;
+    }
+
+    if (isComplete) {
+      setTimerActive(false);
+      setGameComplete(true);
+      setMessage({
+        text: `Congratulations! You completed the puzzle in ${formatTime(time)}!`,
+        isError: false,
+        show: true
+      });
+    }
+  }, [solution, time]);
+
+  const handleNumberInput = useCallback((number) => {
     if (!selectedCell) return;
 
     const [row, col] = selectedCell;
@@ -394,63 +450,7 @@ const SudokuGame = () => {
 
     // Check if the game is complete
     checkCompletion(newBoard);
-  };
-
-  // Check for Sudoku rule violations
-  const checkSudokuRules = (board, row, col, value) => {
-    const violations = new Set();
-
-    // Check row
-    for (let c = 0; c < 9; c++) {
-      if (c !== col && board[row][c] === value) {
-        violations.add(`${row}-${c}`);
-      }
-    }
-
-    // Check column
-    for (let r = 0; r < 9; r++) {
-      if (r !== row && board[r][col] === value) {
-        violations.add(`${r}-${col}`);
-      }
-    }
-
-    // Check 3x3 box
-    const boxRow = Math.floor(row / 3) * 3;
-    const boxCol = Math.floor(col / 3) * 3;
-    for (let r = boxRow; r < boxRow + 3; r++) {
-      for (let c = boxCol; c < boxCol + 3; c++) {
-        if ((r !== row || c !== col) && board[r][c] === value) {
-          violations.add(`${r}-${c}`);
-        }
-      }
-    }
-
-    return violations;
-  };
-
-  const checkCompletion = (currentBoard) => {
-    let isComplete = true;
-
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (currentBoard[i][j] === '' || currentBoard[i][j] !== solution[i][j].toString()) {
-          isComplete = false;
-          break;
-        }
-      }
-      if (!isComplete) break;
-    }
-
-    if (isComplete) {
-      setTimerActive(false);
-      setGameComplete(true);
-      setMessage({
-        text: `Congratulations! You completed the puzzle in ${formatTime(time)}!`,
-        isError: false,
-        show: true
-      });
-    }
-  };
+  }, [selectedCell, board, errors, solution, checkSudokuRules, checkCompletion]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
