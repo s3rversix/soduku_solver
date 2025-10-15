@@ -26,18 +26,6 @@ const HowToPlayContainer = styled.div`
   }
 `;
 
-const Title = styled.h1`
-  color: #343a40;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  font-weight: 700;
-
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-`;
-
 const Section = styled.div`
   margin-bottom: 2rem;
 
@@ -133,8 +121,6 @@ const GreenButton = styled(Button)`
 const HowToPlay = () => {
   return (
     <HowToPlayContainer>
-      <Title>How to Play Sudoku</Title>
-
       <Section>
         <SectionTitle>How to Play</SectionTitle>
         <List>
